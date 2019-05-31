@@ -12,7 +12,7 @@ class City:
         self.lon = lon
 
     def __str__(self):
-        return f'{self.name} lat:{self.lat} lon:{self.lon}'
+        return f'{self.name}: ({self.lat}, {self.lon})'
 
 
 # We have a collection of US cities with population over 750,000 stored in the
@@ -46,8 +46,8 @@ cityreader(cities)
 
 
 # Print the list of cities (name, lat, lon), 1 record per line.
-for c in cities:
-    print(c)
+# for c in cities:
+#     print(c)
 
 # STRETCH GOAL!
 #
@@ -88,5 +88,30 @@ def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
     # TODO Ensure that the lat and lon valuse are all floats
     # Go through each city and check to see if it falls within
     # the specified coordinates.
-
+    # normalize data the smaller value is always 1
+    if lat1 > lat2:
+        # switch lats
+        temp = lat1
+        lat1 = lat2
+        lat2 = temp
+    if lon1 > lon2:
+        # switch lons
+        temp = lon1
+        lon1 = lon2
+        lon2 = temp
+    for city in cities:
+        # if inside lon and lat then append
+        is_lon = city.lon > lon1 and city.lon < lon2
+        is_lat = city.lat > lat1 and city.lat < lat2
+        if is_lon and is_lat:
+            within.append(city)
     return within
+
+
+# Enter lat1,lon1: 45,-100
+# Enter lat2,lon2: 32,-120
+
+# within_cities = cityreader_stretch(45, -100, 32, -120, cities)
+
+# for city in within_cities:
+#     print(city)
